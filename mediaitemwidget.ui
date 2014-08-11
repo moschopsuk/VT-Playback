@@ -20,34 +20,64 @@
    <item row="0" column="0">
     <widget class="QWidget" name="holderWidget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="2" column="2">
+      <item row="3" column="1">
+       <widget class="QLabel" name="labelTotalTime">
+        <property name="text">
+         <string>[Duration]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
        <widget class="QPushButton" name="pushButton">
         <property name="text">
          <string>PushButton</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
+      <item row="2" column="1">
+       <widget class="QLabel" name="codecLabel">
+        <property name="text">
+         <string>[Codec]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
        <widget class="QPushButton" name="quickPlayButton">
         <property name="text">
          <string>Play</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" rowspan="3">
-       <widget class="QLabel" name="pictureLabel">
-        <property name="text">
-         <string>[PICUTRE]</string>
+      <item row="4" column="1">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+        <property name="sizeType">
+         <enum>QSizePolicy::Preferred</enum>
         </property>
-       </widget>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item row="1" column="1">
        <widget class="QLabel" name="nameLabel">
         <property name="text">
          <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" rowspan="4">
+       <widget class="QLabel" name="pictureLabel">
+        <property name="text">
+         <string>[PICUTRE]</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>

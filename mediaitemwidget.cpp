@@ -9,13 +9,16 @@ MediaItemWidget::MediaItemWidget(VTControlWindow *player, QString fileName, QWid
 {
     ui->setupUi(this);
     ui->holderWidget->setStyleSheet("QWidget#holderWidget { border: 1px solid black; background-color:#ddd }");
+    ui->nameLabel->setText(fileName.section("/",-1,-1));
 
     this->player = player;
-    this->producer = new Mlt::Producer(*player->activeProfile(), fileName.toUtf8().constData());
+    producer = new Mlt::Producer(*player->activeProfile(), fileName.toUtf8().constData());
+
+    ui->labelTotalTime->setText(producer->get_length_time());
+    ui->codecLabel->setText(producer->get("meta.media.0.codec.name"));
 
     //generate thumbnail
     Mlt::Frame *frame = producer->get_frame(( producer->get_length() /2 ));
-
     ui->pictureLabel->setPixmap(QPixmap::fromImage(frameToImage(frame, 200, 150)));
     delete frame;
 }
