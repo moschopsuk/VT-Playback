@@ -29,6 +29,7 @@ private slots:
 
 private:
     void createConsumers();
+    void createPlaylistTable();
     void setupPlaylist();
     void reset();
 

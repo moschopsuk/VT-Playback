@@ -18,6 +18,7 @@ VTControlWindow::VTControlWindow(QWidget *parent) :
     consumer->set("rescale", "bilinear");
 
     createConsumers();
+    createPlaylistTable();
 
     //Create internal timmer for
     //tracking video progress
@@ -102,6 +103,16 @@ void VTControlWindow::on_actionAddMedia_triggered() {
     QLayout *lay = techArea->layout();
     MediaItemWidget *widget = new MediaItemWidget(this, fileName, techArea);
     lay->addWidget(widget);
+}
+
+void VTControlWindow::createPlaylistTable() {
+    QStringList headers;
+    headers<<"No."<<"Name"<<"In"<<"Out"<<"Status";
+
+    ui->playlistTable->setColumnCount(5);
+    ui->playlistTable->setHorizontalHeaderLabels(headers);
+    ui->playlistTable->verticalHeader()->setVisible(false);
+    ui->playlistTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 }
 
 void VTControlWindow::updateSeekBar() {
