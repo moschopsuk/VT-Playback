@@ -1,6 +1,8 @@
 #include "vtcontrolwindow.h"
 #include "ui_vtcontrolwindow.h"
 #include "mediaitemwidget.h"
+#include "playlistmodel.h"
+#include "playlistitem.h"
 #include <mlt++/Mlt.h>
 #include <QDebug>
 #include <QtGui>
@@ -106,13 +108,17 @@ void VTControlWindow::on_actionAddMedia_triggered() {
 }
 
 void VTControlWindow::createPlaylistTable() {
-    QStringList headers;
-    headers<<"No."<<"Name"<<"In"<<"Out"<<"Status";
+    model = new PlayListModel(this);
 
-    ui->playlistTable->setColumnCount(5);
-    ui->playlistTable->setHorizontalHeaderLabels(headers);
+    ui->playlistTable->setModel(model);
     ui->playlistTable->verticalHeader()->setVisible(false);
     ui->playlistTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    ui->playlistTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->playlistTable->setColumnWidth(0, 5);
+}
+
+void VTControlWindow::QueueItem(PlaylistItem item) {
+    model->addItem(item);
 }
 
 void VTControlWindow::updateSeekBar() {

@@ -9,13 +9,19 @@ MediaItemWidget::MediaItemWidget(VTControlWindow *player, QString fileName, QWid
 {
     ui->setupUi(this);
     ui->holderWidget->setStyleSheet("QWidget#holderWidget { border: 1px solid black; background-color:#ddd }");
-    ui->nameLabel->setText(fileName.section("/",-1,-1));
+
+    mediaName = fileName.section("/",-1,-1);
+    ui->nameLabel->setText(mediaName);
 
     this->player = player;
     producer = new Mlt::Producer(*player->activeProfile(), fileName.toUtf8().constData());
 
+    //Populate the ui
     ui->labelTotalTime->setText(producer->get_length_time());
     ui->codecLabel->setText(producer->get("meta.media.0.codec.name"));
+
+    ui->inTimeBox->setText("00:00:00:00");
+    ui->outTimeBox->setText(producer->get_length_time());
 
     //generate thumbnail
     Mlt::Frame *frame = producer->get_frame(( producer->get_length() /2 ));
@@ -57,4 +63,10 @@ QImage MediaItemWidget::frameToImage(Mlt::Frame *frame, int width, int height) {
         result.fill(QColor(Qt::red).rgb());
     }
     return result;
+}
+
+void MediaItemWidget::on_queueButton_clicked()
+{
+    PlaylistItem item(*producer, mediaName, ui->inTimeBox->text(),ui->outTimeBox->text());
+    player->QueueItem(item);
 }

@@ -20,11 +20,14 @@ public:
 private slots:
     void on_quickPlayButton_clicked();
 
+    void on_queueButton_clicked();
+
 private:
     QImage frameToImage(Mlt::Frame *frame, int w, int h);
     Ui::MediaItemWidget *ui;
     Mlt::Producer  *producer;
     VTControlWindow *player;
+    QString mediaName;
 };
 
 #endif // MEDIAITEMWIDGET_H

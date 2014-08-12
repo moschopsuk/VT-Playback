@@ -14,10 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         vtcontrolwindow.cpp \
-    mediaitemwidget.cpp
+    mediaitemwidget.cpp \
+    playlistmodel.cpp \
+    playlistitem.cpp
 
 HEADERS  += vtcontrolwindow.h \
-    mediaitemwidget.h
+    mediaitemwidget.h \
+    playlistmodel.h \
+    playlistitem.h
 
 FORMS    += vtcontrolwindow.ui \
     mediaitemwidget.ui

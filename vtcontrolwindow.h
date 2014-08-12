@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <mlt++/Mlt.h>
+#include "playlistmodel.h"
+#include "playlistitem.h"
 
 namespace Ui {
 class VTControlWindow;
@@ -16,6 +18,7 @@ class VTControlWindow : public QMainWindow
 public:
     explicit VTControlWindow(QWidget *parent = 0);
     void PlayItem(Mlt::Producer &producer);
+    void QueueItem(PlaylistItem item);
     Mlt::Profile *activeProfile();
     ~VTControlWindow();
 
@@ -46,6 +49,9 @@ private:
     Mlt::Profile   *profile;
     Mlt::Consumer  *consumer;
     Mlt::Producer  *producer;
+
+    //playlist
+    PlayListModel *model;
 };
 
 #endif // VTCONTROLWINDOW_H
