@@ -207,6 +207,10 @@ void VTControlWindow::on_StartPlaylistButton_clicked() {
     //Connect the two.
     connect(this, SIGNAL(vtComplete()), this, SLOT(playlistNext()));
 
+    startPlaylist();
+}
+
+void VTControlWindow::startPlaylist() {
     listIndex = 0;
     playoutVT(0);
 }
@@ -223,7 +227,12 @@ void VTControlWindow::playoutVT(int index) {
 
     //We are now past the playlist
     if(playlist.count() <= listIndex) {
-        qDebug() << "Playlist done";
+
+        if(ui->loopPlaylist->isChecked()) {
+            startPlaylist();
+            return;
+        }
+
         //unlink the reciver;
         disconnect(this, SLOT(playlistNext()));
         ui->playlistTable->selectRow(0);
@@ -233,6 +242,6 @@ void VTControlWindow::playoutVT(int index) {
 
     ui->playlistTable->selectRow(index);
     PlaylistItem item = playlist.at(index);
-
+    item.getProducer()->seek(0);
     PlayItem(*item.getProducer());
 }

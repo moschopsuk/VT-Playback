@@ -62,6 +62,7 @@ private:
     Mlt::Producer  *producer;
 
     //playlist
+    void startPlaylist();
     void playoutVT(int index);
     PlayListModel *model;
     int listIndex;
