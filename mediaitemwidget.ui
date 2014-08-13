@@ -62,6 +62,9 @@
             <height>16777215</height>
            </size>
           </property>
+          <property name="inputMask">
+           <string>00:00:00:00</string>
+          </property>
           <property name="text">
            <string>00:00:00:00</string>
           </property>
@@ -106,6 +109,9 @@
             <width>85</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="inputMask">
+           <string>00:00:00:00</string>
           </property>
           <property name="text">
            <string>00:00:00:00</string>

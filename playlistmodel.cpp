@@ -1,5 +1,7 @@
 #include "playlistmodel.h"
 #include "playlistitem.h"
+#include <mlt++/Mlt.h>
+#include <QDebug>
 
 PlayListModel::PlayListModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -8,11 +10,25 @@ PlayListModel::PlayListModel(QObject *parent) :
 
 int PlayListModel::rowCount(const QModelIndex & /*parent*/) const {
     return playlist.size();
+}
+
+int PlayListModel::columnCount(const QModelIndex & /*parent*/) const {
+    return 4;
+}
+
+bool PlayListModel::removeRows(int position, int rows, const QModelIndex &index)
+ {
+     Q_UNUSED(index);
+     beginRemoveRows(QModelIndex(), position, position+rows-1);
+
+     for (int row=0; row < rows; ++row) {
+         playlist.removeAt(position);
+     }
+
+     endRemoveRows();
+     return true;
  }
 
- int PlayListModel::columnCount(const QModelIndex & /*parent*/) const {
-     return 4;
- }
 
  QVariant PlayListModel::headerData(int section, Qt::Orientation orientation, int role) const
  {
@@ -62,6 +78,20 @@ int PlayListModel::rowCount(const QModelIndex & /*parent*/) const {
       return QVariant();
 }
 
+Qt::ItemFlags PlayListModel::flags(const QModelIndex &index) const{
+    Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
+
+    if (index.isValid())
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+    else
+        return Qt::ItemIsDropEnabled | defaultFlags;
+}
+
+Qt::DropActions PlayListModel::supportedDropActions() const {
+    return Qt::CopyAction | Qt::MoveAction;
+}
+
+
  void PlayListModel::addItem(PlaylistItem item) {
     int row = playlist.count();
 
@@ -75,5 +105,10 @@ int PlayListModel::rowCount(const QModelIndex & /*parent*/) const {
 
  QList<PlaylistItem> PlayListModel::getModelList() {
     return playlist;
+ }
+
+ void PlayListModel::reset() {
+    qDebug() << playlist.size();
+    removeRows(0, playlist.size(), QModelIndex());
  }
 

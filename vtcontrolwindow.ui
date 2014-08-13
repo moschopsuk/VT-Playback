@@ -17,27 +17,7 @@
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="5" column="0">
-       <widget class="QWidget" name="widget" native="true">
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="checkBox">
-           <property name="text">
-            <string>CheckBox</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QCheckBox" name="checkBox_2">
-           <property name="text">
-            <string>CheckBox</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QLabel" name="currentItemLabel">
         <property name="text">
          <string>TextLabel</string>
@@ -47,20 +27,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="1" rowspan="2">
+      <item row="5" column="1" rowspan="2">
        <widget class="QWidget" name="controlWidget" native="true">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="3" column="2">
@@ -142,10 +109,64 @@
         </layout>
        </widget>
       </item>
+      <item row="3" column="1">
+       <widget class="QTableView" name="playlistTable"/>
+      </item>
       <item row="0" column="1">
        <widget class="QGraphicsView" name="videoWidget"/>
       </item>
-      <item row="0" column="0" rowspan="5">
+      <item row="1" column="1" rowspan="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="StartPlaylistButton">
+          <property name="text">
+           <string>Start Playlist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="loopPlaylist">
+          <property name="text">
+           <string>Loop Playlist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clearButton">
+          <property name="text">
+           <string>Clear Playlist</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" rowspan="7">
        <widget class="QScrollArea" name="playlistScrollArea">
         <property name="widgetResizable">
          <bool>true</bool>
@@ -156,14 +177,11 @@
            <x>0</x>
            <y>0</y>
            <width>626</width>
-           <height>750</height>
+           <height>798</height>
           </rect>
          </property>
         </widget>
        </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QTableView" name="playlistTable"/>
       </item>
      </layout>
     </item>

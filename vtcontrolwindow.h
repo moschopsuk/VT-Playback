@@ -24,16 +24,27 @@ public:
 
 private slots:
     void updateSeekBar();
+    void playlistNext();
 
     //User UI actions
     void on_actionAddMedia_triggered();
     void on_stopButton_clicked();
     void on_playButton_clicked();
 
+    void on_clearButton_clicked();
+
+    void on_StartPlaylistButton_clicked();
+
+
+signals:
+    void vtComplete();
+
 private:
     void createConsumers();
     void createPlaylistTable();
     void setupPlaylist();
+    void play();
+    void pause();
     void reset();
 
     Ui::VTControlWindow *ui;
@@ -51,7 +62,9 @@ private:
     Mlt::Producer  *producer;
 
     //playlist
+    void playoutVT(int index);
     PlayListModel *model;
+    int listIndex;
 };
 
 #endif // VTCONTROLWINDOW_H

@@ -54,6 +54,10 @@ void VTControlWindow::PlayItem(Mlt::Producer &p) {
         consumer->start();
         isPaused = false;
     }
+
+    if(producer->get_speed() == 0) {
+        play();
+    }
 }
 
 void VTControlWindow::createConsumers() {
@@ -114,7 +118,7 @@ void VTControlWindow::createPlaylistTable() {
     ui->playlistTable->verticalHeader()->setVisible(false);
     ui->playlistTable->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
     ui->playlistTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->playlistTable->setColumnWidth(0, 5);
+    ui->playlistTable->setSelectionMode(QAbstractItemView::ExtendedSelection);
 }
 
 void VTControlWindow::QueueItem(PlaylistItem item) {
@@ -135,6 +139,7 @@ void VTControlWindow::updateSeekBar() {
 
         if(producer->position() >= (producer->get_length() - 1)) {
             reset();
+            emit vtComplete();
         }
     }
 }
@@ -159,23 +164,75 @@ void VTControlWindow::reset() {
 
 void VTControlWindow::on_playButton_clicked() {
     if(producer->get_speed() == 0) {
-        isPaused = false;
-        ui->playButton->setText("Pause");
-
-        producer->set_speed(1.0);
-        producer->set("1.refresh", 1);
+        play();
     } else {
-
-        if (producer && producer->get_speed() != 0) {
-            producer->set_speed(0);
-
-            if (consumer->is_valid()) {
-                consumer->purge();
-                producer->seek(consumer->position() + 1);
-            }
-        }
-
-        isPaused = true;
-        ui->playButton->setText("Play");
+        pause();
     }
+}
+
+void VTControlWindow::play() {
+    isPaused = false;
+    ui->playButton->setText("Pause");
+
+    producer->set_speed(1.0);
+    producer->set("1.refresh", 1);
+}
+
+void VTControlWindow::pause() {
+    if (producer && producer->get_speed() != 0) {
+        producer->set_speed(0);
+
+        if (consumer->is_valid()) {
+            consumer->purge();
+            producer->seek(consumer->position() + 1);
+        }
+    }
+
+    isPaused = true;
+    ui->playButton->setText("Play");
+}
+
+void VTControlWindow::on_clearButton_clicked() {
+    model->reset();
+    listIndex = 0;
+}
+
+/*
+ * Begin Playlist Methods
+ */
+void VTControlWindow::on_StartPlaylistButton_clicked() {
+    //clear onstage
+    reset();
+
+    //Connect the two.
+    connect(this, SIGNAL(vtComplete()), this, SLOT(playlistNext()));
+
+    listIndex = 0;
+    playoutVT(0);
+}
+
+void VTControlWindow::playlistNext() {
+    listIndex++;
+    playoutVT(listIndex);
+}
+
+void VTControlWindow::playoutVT(int index) {
+    QList<PlaylistItem> playlist = model->getModelList();
+
+    qDebug() << listIndex << playlist.count();
+
+    //We are now past the playlist
+    if(playlist.count() <= listIndex) {
+        qDebug() << "Playlist done";
+        //unlink the reciver;
+        disconnect(this, SLOT(playlistNext()));
+        ui->playlistTable->selectRow(0);
+        reset();
+        return;
+    }
+
+    ui->playlistTable->selectRow(index);
+    PlaylistItem item = playlist.at(index);
+
+    PlayItem(*item.getProducer());
 }
